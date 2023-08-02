@@ -1,5 +1,5 @@
 package periodicCheck
 
-func main() {
+func Main() {
 
 }

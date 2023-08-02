@@ -1,29 +1,28 @@
 package main
 
 import (
-	"os"
-	"src/errorHandling"
+	// Local Library
+	"github.com/SugarCord/gateway/src/pkg/errorHandling"
 
+	// Local Internal
+
+	commandstruct "github.com/SugarCord/gateway/src/internal/commandStruct"
+	"github.com/SugarCord/gateway/src/internal/handler"
+	periodicCheck "github.com/SugarCord/gateway/src/internal/periodicChecks"
+
+	// Standard Library
+	"os"
+
+	// External Library
 	"github.com/bwmarrin/discordgo"
 	"github.com/joho/godotenv"
 )
 
 var (
 	ERR error
+
 	DISCORD_TOKEN, DISCORD_APPLICATION_ID, DISCORD_PUBLIC_KEY, DISCORD_CLIENT_SECRET string
 	SESSION *discordgo.Session
-	COMMANDS []*discordgo.ApplicationCommand = []*discordgo.ApplicationCommand{
-		{
-			Name: "settings",
-			Description: "Display the settings menu",
-			Type: 1,
-		},
-		{
-			Name: "help",
-			Description: "Display the help menu",
-			Type: 1,
-		},
-	}
 )
 
 func init() {
@@ -45,13 +44,13 @@ func init() {
 	defer SESSION.Close()
 
 	// Interaction registration
-	COMMANDS, ERR = SESSION.ApplicationCommandBulkOverwrite(DISCORD_APPLICATION_ID, "", COMMANDS)
+	commandstruct.COMMANDS, ERR = SESSION.ApplicationCommandBulkOverwrite(DISCORD_APPLICATION_ID, "", commandstruct.COMMANDS)
 	errorHandling.LogCheck(ERR)
 
 }
 
-// func main() {
-// 	go ApplicationCommandHandler()
-// 	go GatewayEventsHandler()
-// 	go PeriodicCheck()
-// }
+func main() {
+	go handler.ApplicationCommand()
+	go handler.GatewayEvent()
+	go periodicCheck.Main()
+}

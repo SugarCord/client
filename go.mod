@@ -1,4 +1,4 @@
-module src
+module github.com/SugarCord/gateway
 
 go 1.20
 
