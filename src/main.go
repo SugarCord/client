@@ -18,14 +18,15 @@ import (
 )
 
 var (
+	// Re-use
 	ERR error
 
+	// Environment
 	DISCORD_TOKEN, DISCORD_APPLICATION_ID, DISCORD_PUBLIC_KEY, DISCORD_CLIENT_SECRET string
 	SESSION *discordgo.Session
 )
 
 func init() {
-
 	// Load env from .env file
 	godotenv.Load("../.env")
 	DISCORD_TOKEN = os.Getenv("DISCORD_TOKEN")
@@ -45,7 +46,6 @@ func init() {
 	// Interaction registration
 	commandStruct.COMMANDS, ERR = SESSION.ApplicationCommandBulkOverwrite(DISCORD_APPLICATION_ID, "", commandStruct.COMMANDS)
 	errorHandling.LogCheck(ERR)
-
 }
 
 func main() {
