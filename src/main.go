@@ -5,10 +5,9 @@ import (
 	"github.com/SugarCord/gateway/src/pkg/errorHandling"
 
 	// Local Internal
-
-	commandstruct "github.com/SugarCord/gateway/src/internal/commandStruct"
+	"github.com/SugarCord/gateway/src/internal/commandStruct"
 	"github.com/SugarCord/gateway/src/internal/handler"
-	periodicCheck "github.com/SugarCord/gateway/src/internal/periodicChecks"
+	"github.com/SugarCord/gateway/src/internal/periodicCheck"
 
 	// Standard Library
 	"os"
@@ -44,7 +43,7 @@ func init() {
 	defer SESSION.Close()
 
 	// Interaction registration
-	commandstruct.COMMANDS, ERR = SESSION.ApplicationCommandBulkOverwrite(DISCORD_APPLICATION_ID, "", commandstruct.COMMANDS)
+	commandStruct.COMMANDS, ERR = SESSION.ApplicationCommandBulkOverwrite(DISCORD_APPLICATION_ID, "", commandStruct.COMMANDS)
 	errorHandling.LogCheck(ERR)
 
 }

@@ -1,18 +1,16 @@
-package commandstruct
+package commandStruct
 
-import (
-	"github.com/bwmarrin/discordgo"
-)
+import "github.com/bwmarrin/discordgo"
 
-var COMMANDS = []*discordgo.ApplicationCommand{
-		{
-			Name: "settings",
-			Description: "Display the settings menu",
-			Type: 1,
-		},
-		{
-			Name: "help",
-			Description: "Display the help menu",
-			Type: 1,
-		},
+var COMMANDS = []*discordgo.ApplicationCommand {
+	{
+		Name: "help",
+		Description: "Display the help menu",
+		Type: 1,
+	},
+	{
+		Name: "settings",
+		Description: "Display the settings menu",
+		Type: 1,
+	},
 }
