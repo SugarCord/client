@@ -1,9 +1,8 @@
 package main
 
-import "src/errorHandling"
-
 import (
 	"os"
+	"src/errorHandling"
 
 	"github.com/bwmarrin/discordgo"
 	"github.com/joho/godotenv"
@@ -38,16 +37,16 @@ func init() {
 
 	// Session creation
 	SESSION, ERR = discordgo.New("Bot " + DISCORD_TOKEN)
-	FatalCheck(ERR)
+	errorHandling.FatalCheck(ERR)
 
 	// WebSocket creation
 	ERR = SESSION.Open()
-	FatalCheck(ERR)
+	errorHandling.FatalCheck(ERR)
 	defer SESSION.Close()
 
 	// Interaction registration
 	COMMANDS, ERR = SESSION.ApplicationCommandBulkOverwrite(DISCORD_APPLICATION_ID, "", COMMANDS)
-	LogCheck(ERR)
+	errorHandling.LogCheck(ERR)
 
 }
 
