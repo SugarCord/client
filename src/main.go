@@ -21,7 +21,7 @@ func init() {
 	config.SESSION, config.ERR = discordgo.New("Bot " + config.DISCORD_TOKEN)
 	errorHandling.FatalCheck(config.ERR)
 
-	// WebSocket creation
+	// WebSocket connection
 	config.ERR = config.SESSION.Open()
 	errorHandling.FatalCheck(config.ERR)
 	defer config.SESSION.Close()
