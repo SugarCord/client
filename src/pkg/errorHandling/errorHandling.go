@@ -1,6 +1,9 @@
 package errorHandling
 
-import "log"
+import (
+	// Standard Library
+	"log"
+)
 
 // if err, fatal
 func FatalCheck(err error) {

@@ -2,6 +2,7 @@ package commandStruct
 
 import "github.com/bwmarrin/discordgo"
 
+// list of registered application commands
 var COMMANDS = []*discordgo.ApplicationCommand {
 	{
 		Name: "help",

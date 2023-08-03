@@ -1,2 +1,6 @@
 # env
 .env
+
+# Golang
+*.exe
+__debug_bin

@@ -2,6 +2,7 @@ package main
 
 import (
 	// Config
+
 	"github.com/SugarCord/gateway/src/config"
 
 	// Local Library
@@ -9,30 +10,42 @@ import (
 
 	// Local Internal
 	"github.com/SugarCord/gateway/src/internal/commandStruct"
-	"github.com/SugarCord/gateway/src/internal/handler"
-	"github.com/SugarCord/gateway/src/internal/periodicCheck"
 
 	// External Library
 	"github.com/bwmarrin/discordgo"
 )
 
 func init() {
-	// Session creation
+	// Keep Alive
+	<-make(chan struct{})
+
+	// Session Creation
 	config.SESSION, config.ERR = discordgo.New("Bot " + config.DISCORD_TOKEN)
 	errorHandling.FatalCheck(config.ERR)
 
-	// WebSocket connection
+	// WebSocket Connection
 	config.ERR = config.SESSION.Open()
 	errorHandling.FatalCheck(config.ERR)
 	defer config.SESSION.Close()
 
-	// Interaction registration
+	// Create Handlers
+
+	// create an handler that will be called every time a new interaction is created, answering by an "hello world" message
+	config.SESSION.AddHandler(func(s *discordgo.Session, i *discordgo.InteractionCreate) {
+		// Interaction Response
+		config.ERR = s.InteractionRespond(i.Interaction, &discordgo.InteractionResponse{
+			Type: discordgo.InteractionResponseChannelMessageWithSource,
+			Data: &discordgo.InteractionResponseData{
+				Content: "Hello World!",
+			},
+		})
+		errorHandling.LogCheck(config.ERR)
+	})
+
+	// Interaction Registration
 	commandStruct.COMMANDS, config.ERR = config.SESSION.ApplicationCommandBulkOverwrite(config.DISCORD_APPLICATION_ID, "", commandStruct.COMMANDS)
 	errorHandling.LogCheck(config.ERR)
 }
 
 func main() {
-	go handler.ApplicationCommand()
-	go handler.GatewayEvent()
-	go periodicCheck.Main()
 }
