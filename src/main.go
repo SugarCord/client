@@ -2,7 +2,6 @@ package main
 
 import (
 	// Config
-
 	"github.com/SugarCord/gateway/src/config"
 
 	// Local Library
