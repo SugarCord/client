@@ -15,17 +15,9 @@ import (
 )
 
 func init() {
-	// Keep Alive
-	<-make(chan struct{})
-
 	// Session Creation
 	config.SESSION, config.ERR = discordgo.New("Bot " + config.DISCORD_TOKEN)
 	errorHandling.FatalCheck(config.ERR)
-
-	// WebSocket Connection
-	config.ERR = config.SESSION.Open()
-	errorHandling.FatalCheck(config.ERR)
-	defer config.SESSION.Close()
 
 	// Create Handlers
 
@@ -41,10 +33,27 @@ func init() {
 		errorHandling.LogCheck(config.ERR)
 	})
 
+	config.SESSION.AddHandler(func(s *discordgo.Session, i *discordgo.MessageCreate) {
+		// Message Response
+		if i.Content == "ping" {
+			_, config.ERR = s.ChannelMessageSend(i.ChannelID, "pong")
+			errorHandling.LogCheck(config.ERR)
+		}
+	})
+
 	// Interaction Registration
 	commandStruct.COMMANDS, config.ERR = config.SESSION.ApplicationCommandBulkOverwrite(config.DISCORD_APPLICATION_ID, "", commandStruct.COMMANDS)
 	errorHandling.LogCheck(config.ERR)
+
+	// WebSocket Connection
+	config.ERR = config.SESSION.Open()
+	errorHandling.FatalCheck(config.ERR)
+	defer config.SESSION.Close()
+
 }
 
 func main() {
+
+	// Keep Alive
+	<-make(chan struct{})
 }
