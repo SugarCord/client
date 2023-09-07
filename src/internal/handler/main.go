@@ -19,10 +19,7 @@ func Main() {
 }
 
 func interaction() {
-
-	// interaction registration with a switch
-
-
+	// Exhaustive Interaction Handler Instantiation
 	config.SESSION.AddHandler(func(s *discordgo.Session, i *discordgo.InteractionCreate) {
 
 	})

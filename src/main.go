@@ -20,7 +20,7 @@ func main() {
 	config.SESSION, config.ERR = discordgo.New("Bot " + config.DISCORD_TOKEN)
 	errorHandling.FatalCheck(config.ERR)
 
-	// Instantiate Handlers
+	// Handlers Instantiation
 	handler.Main()
 
 	// Interaction Registration
