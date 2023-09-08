@@ -8,8 +8,8 @@ import (
 	"github.com/SugarCord/gateway/src/pkg/errorHandling"
 
 	// Local Internal
-	"github.com/SugarCord/gateway/src/internal/commandStruct"
-	"github.com/SugarCord/gateway/src/internal/handler"
+	"github.com/SugarCord/gateway/src/internal/commands"
+	"github.com/SugarCord/gateway/src/internal/eventHandler"
 
 	// External Library
 	"github.com/bwmarrin/discordgo"
@@ -20,12 +20,11 @@ func main() {
 	config.SESSION, config.ERR = discordgo.New("Bot " + config.DISCORD_TOKEN)
 	errorHandling.FatalCheck(config.ERR)
 
-	// Handlers Instantiation
-	handler.Main()
-
 	// Interaction Registration
-	commandStruct.COMMANDS, config.ERR = config.SESSION.ApplicationCommandBulkOverwrite(config.DISCORD_APPLICATION_ID, "", commandStruct.COMMANDS)
-	errorHandling.LogCheck(config.ERR)
+	commands.RegisterBulk()
+
+	// Handlers Instantiation
+	eventHandler.Main()
 
 	// WebSocket Connection
 	config.ERR = config.SESSION.Open()
