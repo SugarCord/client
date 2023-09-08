@@ -1,4 +1,4 @@
-package errorHandling
+package errorHandler
 
 import (
 	// Standard Library

@@ -5,7 +5,7 @@ import (
 	"github.com/SugarCord/gateway/src/config"
 
 	// Local Library
-	"github.com/SugarCord/gateway/src/pkg/errorHandling"
+	"github.com/SugarCord/gateway/src/pkg/errorHandler"
 
 	// External Library
 	"github.com/bwmarrin/discordgo"
@@ -25,14 +25,9 @@ var (
 			Type: 1,
 		},
 	}
-
-	// Map of Command Names to their Handlers
-	commandHandlers = map[string]func(s *discordgo.Session, i *discordgo.InteractionCreate) {
-		"help": func(s *discordgo.Session, i *discordgo.InteractionCreate) {},
-	}
 )
 
 func RegisterBulk() {
 	commandsList, config.ERR = config.SESSION.ApplicationCommandBulkOverwrite(config.DISCORD_APPLICATION_ID, "", commandsList)
-	errorHandling.LogCheck(config.ERR)
+	errorHandler.LogCheck(config.ERR)
 }
